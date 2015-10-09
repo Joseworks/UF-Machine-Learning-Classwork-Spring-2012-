@@ -1,7 +1,7 @@
 # README #
-  # EEL 6825 Jose C Fernandez
- # MAMMOGRAPHIC MASSES CLASSIFICATION PROJECT
-# GROUP 19
+## EEL 6825 Jose C Fernandez
+## MAMMOGRAPHIC MASSES CLASSIFICATION PROJECT
+## GROUP 19_1 
  # Note
  # All Graphs are displayed fullscreen for clarity
  there is a text report generated with results and conclusions
