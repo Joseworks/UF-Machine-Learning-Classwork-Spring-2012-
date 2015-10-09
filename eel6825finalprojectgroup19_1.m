@@ -976,14 +976,14 @@ disp('   ')
 
  % diff = ~strcmp(ldaClass60(ldaClass60==1),randomized_testing_set(randomized_testing_set==1,6));
 
- compclassKmeans60=abs(length(Group8)-size(Malign60,1))*100/(size(Malign60,1));
+ unsuccessful_kmeans_test_set=abs(length(Group8)-size(Malign60,1))*100/(size(Malign60,1));
 
 
 
-% disp(['The K means Clustering analysis diagnostic differs  ',num2str(compclassKmeans60),' % '])
+% disp(['The K means Clustering analysis diagnostic differs  ',num2str(unsuccessful_kmeans_test_set),' % '])
  %disp('of patients with probable malignant diagnostic ')
  % disp('from the Doctors diagnostic ')
- disp(['The K means Clustering analysis  successfully  classified  ',num2str(100-compclassKmeans60),' % '])
+ disp(['The K means Clustering analysis  successfully  classified  ',num2str(100-unsuccessful_kmeans_test_set),' % '])
 
   %disp(['The best performing classification was  ',num2str(compclass),' % '])
   disp('   ')
@@ -994,13 +994,14 @@ disp('   ')
 
   disp('-------------- Conclusions ---------------')
   disp('   ')
-  perf=[  100-comp   100-compclass60   100-compclassKmeans60 ];
+  perf=[  100-comp   100-compclass60   100-unsuccessful_kmeans_test_set ];
 
   [Klass Best]  =max(perf,[],2);
 
   if Best==1
    disp(['The best classifier was KNN with ',num2str(Klass),' % of patients'])
    disp('successfully classified ')
+
  else if Best==2
 
    disp(['The best classifier was LDA with ',num2str(Klass),' % of patients'])
@@ -1052,7 +1053,7 @@ end;
   ylabel('  Parameters Shape/Margin/Density ','FontSize',25)
   title('Kmeans Classifier for the Test Set','FontSize',25)
   title({'';[...
-    ' Kmeans Classifier for the Test Set classified successfully ', num2str(100-compclassKmeans60)...
+    ' Kmeans Classifier for the Test Set classified successfully ', num2str(100-unsuccessful_kmeans_test_set)...
     ' % of the patients ']},'fontsize',16)
 
   le = legend('Shape','Margin','Density','Patients Classified as Benign',...
@@ -1191,17 +1192,17 @@ pat60=[1:N60];
 
 
 %  Assign test data for three classes.
-training60 = cell(3,1);
-training60{1} =[randomized_testing_set(:,3) pat60'];
-training60{2} =[randomized_testing_set(:,4)  pat60'];
-training60{3} = [randomized_testing_set(:,5) pat60'] ;
+class_test_data_set_lda = cell(3,1);
+class_test_data_set_lda{1} =[randomized_testing_set(:,3) pat60'];
+class_test_data_set_lda{2} =[randomized_testing_set(:,4)  pat60'];
+class_test_data_set_lda{3} = [randomized_testing_set(:,5) pat60'] ;
 
 % sample mean
-sample_means = cell(length(training60),1);
+sample_means = cell(length(class_test_data_set_lda),1);
 
 % compute sample mean to use as the class prototype.
-for i=1:length(training60),
-  sample_means{i} = mean(training60{i});
+for i=1:length(class_test_data_set_lda),
+  sample_means{i} = mean(class_test_data_set_lda{i});
 end
 
 % set up the domain over which you want to visualize the decision
@@ -1233,7 +1234,7 @@ dist = [];
 
 % loop through each class and calculate distance measure for each (x,y)
 % from the class prototype.
-for i=1:length(training60),
+for i=1:length(class_test_data_set_lda),
 
     % calculate the city block distance between every (x,y) pair and
     % the sample mean of the class.
@@ -1270,9 +1271,9 @@ set(gca,'ydir','normal');
 colormap([1 0.8 0.8; 0.95 1 0.95; 0.9 0.9 1]);
 
 % plot the class training data.
-plot(training60{1}(:,1),training60{1}(:,2), 'r.');
-plot(training60{2}(:,1),training60{2}(:,2), 'go');
-plot(training60{3}(:,1),training60{3}(:,2), 'b*');
+plot(class_test_data_set_lda{1}(:,1),class_test_data_set_lda{1}(:,2), 'r.');
+plot(class_test_data_set_lda{2}(:,1),class_test_data_set_lda{2}(:,2), 'go');
+plot(class_test_data_set_lda{3}(:,1),class_test_data_set_lda{3}(:,2), 'b*');
 
 
 
