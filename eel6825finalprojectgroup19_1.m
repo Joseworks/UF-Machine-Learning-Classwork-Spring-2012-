@@ -97,8 +97,8 @@ for jj=1:nn
         (source_data_with_all_parameters (jj,5)>=1 && source_data_with_all_parameters(jj,4)<=5 )&&...  %  5. Density: mass density high=1 iso=2 low=3 fat-containing=4 (ordinal)
         (source_data_with_all_parameters (jj,6)>=0 && source_data_with_all_parameters(jj,6)<=1) )      %  6. Severity: benign=0 or malignant=1 (binominal)
 
-       cc=cc+1;
-       fully_sanitized_data(cc,:)= source_data_with_all_parameters(jj,:);
+    cc=cc+1;
+    fully_sanitized_data(cc,:)= source_data_with_all_parameters(jj,:);
       %  fully_sanitized_data is a matrix of 6 columns contining patient information without
       % any missing parameters and without outliers
     end
@@ -164,7 +164,7 @@ end
 training3=training2(2:end,:);
 trainingbenign=training3;
 
-  %  generates the training for malign
+  %  generates the training set for malign
   training4=[ 3 4 1 ];
   for sh=1:4
     for mg=1:5
@@ -195,12 +195,10 @@ trainingbenign=training3;
  % classify and KNNclassify Matlab functions in order to classify the data.
 
 
-
-
   %% Creating the risk MDdiagnostic classify as malignant by Doctors severity
   % attribute
 
-  h=0; Group6=zeros(10,6);
+  h=0; Group6 = zeros(10,6);
   for j=1:length(fully_sanitized_data);
 
     if fully_sanitized_data(j,6)==1
@@ -294,13 +292,13 @@ for k=1:knn_iterations
 % Error for Shape----------------
 
 nWrong40=sum(Class40(:)~= randomized_training_set(:,3));
-pctWrong40=nWrong40/size(fully_sanitized_data,1)*100;
+percentage_wrong_training_set=nWrong40/size(fully_sanitized_data,1)*100;
 
  %  disp(['Percentage  wrong for Shape KNN ',num2str(pctWrongKS),' %'])
- pctright40=100-pctWrong40;
+ percentage_right_training_set=100-percentage_wrong_training_set;
 %disp('')
-%disp(['Percentage  right for  KNN ',num2str(pctright40),' %'])
-mm(k)=pctright40;
+%disp(['Percentage  right for  KNN ',num2str(percentage_right_training_set),' %'])
+mm(k)=percentage_right_training_set;
 
 
 end
@@ -315,13 +313,13 @@ end
 clear Class40
 Class40 = knnclassify(Fullsample40, training, group,idx) ;
 
-Knnmalign40=size(Class40(Class40==1),1);  % This is how many patiente classify as malignant
+KNN_malignant_training_set=size(Class40(Class40==1),1);  % This is how many patiente classify as malignant
 
 
 
 
 pmd=100*MDdiagnostic/size(fully_sanitized_data,1);
-pknn40=100*Knnmalign40/size(fully_sanitized_data,1);
+pknn40=100*KNN_malignant_training_set/size(fully_sanitized_data,1);
 comp40=pmd-pknn40;
 
  % Display results KNN
@@ -342,7 +340,7 @@ comp40=pmd-pknn40;
  disp(['out of ', num2str(knn_iterations),' iterations'])
 
 % disp('    KNN for the Training set ( 40% )   ')
-% disp(['There are   ',num2str(Knnmalign40),' patients'])
+% disp(['There are   ',num2str(KNN_malignant_training_set),' patients'])
 % disp('with probable malignant diagnostic ')
 % disp('according to the KNN for the training set')
 
@@ -368,10 +366,10 @@ incr = 1;
 indexes_patient_amount_training_set_lda=1:ns;
 
 % Define  some training data for three classes.
-train40 = cell(3,1);
-train40{1} =[randomized_training_set(:,3) indexes_patient_amount_training_set_lda'];
-train40{2} =[randomized_training_set(:,4)  indexes_patient_amount_training_set_lda'];
-train40{3} = [randomized_training_set(:,5) indexes_patient_amount_training_set_lda'] ;
+class_KNN_training = cell(3,1);
+class_KNN_training{1} =[randomized_training_set(:,3) indexes_patient_amount_training_set_lda'];
+class_KNN_training{2} =[randomized_training_set(:,4)  indexes_patient_amount_training_set_lda'];
+class_KNN_training{3} = [randomized_training_set(:,5) indexes_patient_amount_training_set_lda'] ;
 
 
 
@@ -387,9 +385,9 @@ set(gca,'ydir','normal');
 
 
  %plot the class training data.
- plot(train40{1}(:,2),train40{1}(:,1), 'c.','MarkerSize',10);
- plot(train40{2}(:,2),train40{2}(:,1), 'g.','MarkerSize',10);
- plot(train40{3}(:,2),train40{3}(:,1), 'm.','MarkerSize',10);
+ plot(class_KNN_training{1}(:,2),class_KNN_training{1}(:,1), 'c.','MarkerSize',10);
+ plot(class_KNN_training{2}(:,2),class_KNN_training{2}(:,1), 'g.','MarkerSize',10);
+ plot(class_KNN_training{3}(:,2),class_KNN_training{3}(:,1), 'm.','MarkerSize',10);
 % plot the classification
 plot(indexes_patient_amount_training_set_lda(Class40==0),Fullsample40(Class40==0),'ob','LineWidth',.2,'MarkerSize',20);
 plot(indexes_patient_amount_training_set_lda(Class40==1),Fullsample40(Class40==1),'or','LineWidth',.2,'MarkerSize',20);
@@ -843,9 +841,9 @@ disp('   ')
   hold on;
   set(gca,'ydir','normal');
  %plot the class training data.
- plot(train40{1}(:,2),train40{1}(:,1), 'c.','MarkerSize',10);
- plot(train40{2}(:,2),train40{2}(:,1), 'g.','MarkerSize',10);
- plot(train40{3}(:,2),train40{3}(:,1), 'm.','MarkerSize',10);
+ plot(class_KNN_training{1}(:,2),class_KNN_training{1}(:,1), 'c.','MarkerSize',10);
+ plot(class_KNN_training{2}(:,2),class_KNN_training{2}(:,1), 'g.','MarkerSize',10);
+ plot(class_KNN_training{3}(:,2),class_KNN_training{3}(:,1), 'm.','MarkerSize',10);
 
 
 
