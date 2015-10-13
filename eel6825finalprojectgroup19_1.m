@@ -195,7 +195,7 @@ trainingbenign=training3;
  % classify and KNNclassify Matlab functions in order to classify the data.
 
 
-  %% Creating the risk MDdiagnostic classify as malignant by Doctors severity
+  %% Creating the risk doctor_diagnostic classify as malignant by Doctors severity
   % attribute
 
   h=0; Group6 = zeros(10,6);
@@ -208,7 +208,7 @@ trainingbenign=training3;
 
  end
 
- MDdiagnostic=size(Group6,1);
+ doctor_diagnostic=size(Group6,1);
 
  % Group6 will contain all the patients already classified by the Doctors as
  % malignant. It will be used to compare the classifiers performance
@@ -278,12 +278,12 @@ title('Parameters Distribution ','fontsize',25)
 %to, and is of the same type as Group
  %----------------------------------
  % KNN for Training Data 40%
-knn_iterations=20; % Amount of iterations performed by KNN
+knn_iterations_count=20; % Amount of iterations performed by KNN
 
 Fullsample40=[ randomized_training_set(:,3)    randomized_training_set(:,4)   randomized_training_set(:,5)];
 
 clear k idx
-for k=1:knn_iterations
+for k=1:knn_iterations_count
 
 
    % Classifiying k clusters
@@ -318,7 +318,7 @@ KNN_malignant_training_set=size(Class40(Class40==1),1);  % This is how many pati
 
 
 
-pmd=100*MDdiagnostic/size(fully_sanitized_data,1);
+pmd=100*doctor_diagnostic/size(fully_sanitized_data,1);
 pknn40=100*KNN_malignant_training_set/size(fully_sanitized_data,1);
 comp40=pmd-pknn40;
 
@@ -327,7 +327,7 @@ comp40=pmd-pknn40;
  disp('----------------  Results  ---------------')
 
 
- disp(['There are   ',num2str(MDdiagnostic),' patients'])
+ disp(['There are   ',num2str(doctor_diagnostic),' patients'])
  disp('with probable malignant diagnostic ')
  disp('according to the Doctors.')
  disp('    ')
@@ -337,7 +337,7 @@ comp40=pmd-pknn40;
  disp('   ')
  disp(['The best performance for KNN Classification'])
  disp(['using the Training Set  was  ',num2str(100-comp40),' % right with ',num2str(idx), ' iteration(s)'])
- disp(['out of ', num2str(knn_iterations),' iterations'])
+ disp(['out of ', num2str(knn_iterations_count),' iterations'])
 
 % disp('    KNN for the Training set ( 40% )   ')
 % disp(['There are   ',num2str(KNN_malignant_training_set),' patients'])
@@ -412,12 +412,12 @@ plot(indexes_patient_amount_training_set_lda(Class40==1),Fullsample40(Class40==1
 %%  KNN for Test Data 60%
 clear m idx mm
 
-knn_iterations=20; % Amount of iterations performed by KNN
+knn_iterations_count=20; % Amount of iterations performed by KNN
 
 full_sample_testing_set=[ randomized_testing_set(:,3)    randomized_testing_set(:,4)   randomized_testing_set(:,5)];
 
 clear k idx
-for k=1:knn_iterations
+for k=1:knn_iterations_count
 
 
    % Classifying k clusters
@@ -449,7 +449,7 @@ k_cluster_classification_testing_set = knnclassify(full_sample_testing_set, trai
 malign_patient_amount_knn_classification=size(k_cluster_classification_testing_set(k_cluster_classification_testing_set==1),1); % This is how many patiente classify as malignant
 
 
-pmd=100*MDdiagnostic/size(fully_sanitized_data,1);
+pmd=100*doctor_diagnostic/size(fully_sanitized_data,1);
 performance_knn_classification_testing_set=100*malign_patient_amount_knn_classification/size(fully_sanitized_data,1);
 comp=pmd-performance_knn_classification_testing_set;
 
@@ -459,7 +459,7 @@ comp=pmd-performance_knn_classification_testing_set;
  disp('   ')
  disp(['The best performance for KNN Classification'])
  disp(['using for the Test Set  was  ',num2str(100-comp),' % right with ',num2str(idx), ' iteration(s)'])
- disp(['out of ', num2str(knn_iterations),' iterations'])
+ disp(['out of ', num2str(knn_iterations_count),' iterations'])
 % disp('    KNN for the Test set ( 60% )   ')
  %disp(['There are   ',num2str(malign_patient_amount_knn_classification),' patients'])
  %disp('with probable malignant diagnostic ')
@@ -572,7 +572,7 @@ group”.
 
  end;
 
-    % Creating the risk MDdiagnostic classify as malignant by Doctors severity
+    % Creating the risk doctor_diagnostic classify as malignant by Doctors severity
   % attribute for training set in order to compare results
 
 
@@ -586,7 +586,7 @@ group”.
 
  end
 
- MDdiagnostic40=size(Group7,1);
+ doctor_diagnostic40=size(Group7,1);
 
  compclass40=abs((size(malignclass40,2)-length(Group7))*100/(size(malignclass40,2)));
  compclassQ40=abs((size(malignclassQ40,2)-length(Group7))*100/(size(malignclassQ40,2)));
@@ -646,7 +646,7 @@ disp('    ')
  end;
 
 
-    % Creating the risk MDdiagnostic classify as malignant by Doctors severity
+    % Creating the risk doctor_diagnostic classify as malignant by Doctors severity
   % attribute for testing set in order to compare results
 
 
@@ -661,7 +661,7 @@ disp('    ')
  end
 
 
- MDdiagnostic60=size(Group8,1);
+ doctor_diagnostic60=size(Group8,1);
 
 
  compclass60=abs((size(malignclass60,2)-length(Group8))*100/(size(malignclass60,2)));
