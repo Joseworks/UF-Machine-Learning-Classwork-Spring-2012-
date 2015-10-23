@@ -1,0 +1,26 @@
+http://archive.ics.uci.edu/ml/
+
+Current:
+
+http://mlearn.ics.uci.edu/databases/mammographic-masses/mammographic_masses.names
+
+
+http://mlearn.ics.uci.edu/databases/mammographic-masses/mammographic_masses.data
+
+
+
+
+
+Index of /ml/machine-learning-databases/breast-cancer-wisconsin
+
+http://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data
+
+http://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/
+
+
+http://pages.cs.wisc.edu/~olvi/cs525/wdbc.names
+
+https://www.safaribooksonline.com/library/view/data-science-for/9781449374273/ch04.html
+
+
+Survival-Time Classification Breast Cancer patients
